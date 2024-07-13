@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Collections;
+using System.Numerics;
 
 namespace OSK.Math.Polynomials
 {

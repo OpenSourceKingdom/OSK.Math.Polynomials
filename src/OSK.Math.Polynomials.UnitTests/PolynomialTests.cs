@@ -53,5 +53,48 @@ namespace OSK.Math.Polynomials.UnitTests
         }
 
         #endregion
+
+        #region ToString
+
+        [Fact]
+        public void ToString_NoCoeffecients_ReturnsZeroString()
+        {
+            // Arrange
+            var polynomial = new Polynomial(Array.Empty<int>());
+
+            // Act
+            var str = polynomial.ToString();
+
+            // Assert
+            Assert.Equal("0", str);
+        }
+
+        [Fact]
+        public void ToString_AllZeroCoeffecients_ReturnsZeroString()
+        {
+            // Arrange
+            var polynomial = new Polynomial(0, 0, 0, 0); // 0 + 0x + 0x^2 + 0x^3
+
+            // Act
+            var str = polynomial.ToString();
+
+            // Assert
+            Assert.Equal("0", str);
+        }
+
+        [Fact]
+        public void ToString_ManyZeroAndNonZeroCoeffecients_ReturnsNonZeroCoeffecientString()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 2, 0, 0, 0, -5, 0, 6); // 1 + 2x + 0x^2 + 0x^3 0x^4 - 5x^5 + 0x^6 + 6x^7
+
+            // Act
+            var str = polynomial.ToString();
+
+            // Assert
+            Assert.Equal("1 + 2x - 5x^5 + 6x^7", str);
+        }
+
+        #endregion
     }
 }

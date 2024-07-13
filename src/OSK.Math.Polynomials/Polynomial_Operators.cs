@@ -10,11 +10,6 @@ namespace OSK.Math.Polynomials
 
         public override string ToString()
         {
-            if (TotalCoeffecients == 0)
-            {
-                return "Empty";
-            }
-
             // Avoid prematurely freezing the polynomial due to ToString on text tooltips that call this method.
             Pack(removeZeroCoeffecients: false);
 
