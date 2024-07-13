@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace OSK.Math.Polynomials
 {
-    public static class MathExtensions
+    public static class MathUtilities
     {
         public static EuclideanResult<BigInteger> EGcd(BigInteger a, BigInteger b)
         {
@@ -38,7 +38,7 @@ namespace OSK.Math.Polynomials
             };
         }
 
-        public static Fraction ModInverse(this Fraction fraction, int modulo)
+        public static Fraction ModInverse(Fraction fraction, int modulo)
         {
             var result = EGcd(fraction.Denominator, modulo);
             if (result.Gcd != 1)

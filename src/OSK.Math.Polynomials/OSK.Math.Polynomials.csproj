@@ -4,8 +4,8 @@
 		<TargetFramework>netstandard2.1</TargetFramework>
 		<RepositoryUrl>https://github.com/OpenSourceKingdom/OSK.Math.Polynomials</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
-		<Description>A .NET library that provides polynomial mathematics and other operations that might be useful for cryptography or other needs.</Description>
-		<PackageTags>OpenSourceKingdom, OpenSource, OSK, math, polynomial, utility, operations</PackageTags>
+		<Description>A .NET library that provides polynomial mathematics and other operations that can be used with polynomials. Supports fraction math and provides access to special operations such as the extended euclidean algorithm.</Description>
+		<PackageTags>OpenSourceKingdom, OpenSource, OSK, math, polynomial, utility, operations, fraction, exponent, term</PackageTags>
 		<Authors>BlankDev117</Authors>
 		<Title>OSK.Math.Polynomials</Title>
 	</PropertyGroup>

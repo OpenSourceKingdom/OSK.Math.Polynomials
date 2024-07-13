@@ -3,6 +3,7 @@ using System;
 using System.Linq;
 using System.Collections;
 using System.Numerics;
+using Fractions;
 
 namespace OSK.Math.Polynomials
 {
@@ -31,8 +32,8 @@ namespace OSK.Math.Polynomials
         {
         }
 
-        public Polynomial(params int[] coefficients)
-            : this(coefficients.Select((value, index) => new PolynomialTerm(value, 1, index))
+        public Polynomial(params Fraction[] coefficients)
+            : this(coefficients.Select((value, index) => new PolynomialTerm(value, index))
                 .Where(term => term.Coeffecient != 0))
         {
         }

@@ -60,7 +60,7 @@ namespace OSK.Math.Polynomials.UnitTests
         public void ToString_NoCoeffecients_ReturnsZeroString()
         {
             // Arrange
-            var polynomial = new Polynomial(Array.Empty<int>());
+            var polynomial = new Polynomial(0);
 
             // Act
             var str = polynomial.ToString();
