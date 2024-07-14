@@ -291,6 +291,7 @@ namespace OSK.Math.Polynomials
                 result[i] = new PolynomialTerm(MathUtilities.ModInverse(polynomial[i].Coeffecient, modulo), result[i].Exponent);
             }
 
+            result.Pack();
             return result;
         }
 
@@ -339,6 +340,10 @@ namespace OSK.Math.Polynomials
             var gcd = remainderPolynomials[remainderPolynomials.Count - 2];
             var u = uPolynomials[uPolynomials.Length - 2];
             var v = vPolynomials[vPolynomials.Length - 2];
+
+            gcd.Pack();
+            u.Pack();
+            v.Pack();
 
             // Make lead coeffecient one
             var scaleFactor = gcd[gcd.TotalCoeffecients - 1].Coeffecient;
