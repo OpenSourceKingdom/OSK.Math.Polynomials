@@ -1,4 +1,5 @@
 ﻿using Fractions;
+using OSK.Math.Polynomials.Exceptions;
 using OSK.Math.Polynomials.Models;
 using System;
 using System.Numerics;
@@ -43,12 +44,26 @@ namespace OSK.Math.Polynomials
             var result = EGcd(fraction.Denominator, modulo);
             if (result.Gcd != 1)
             {
-                throw new InvalidOperationException("The modular inverse does not exist.");
+                throw new ModInverseException($"The modular inverse between {fraction.Denominator} and {modulo} does not exist.");
             }
 
             var mod = result.U % modulo;
             var inverseResult = mod * fraction.Numerator % modulo;
             return inverseResult < 0 ? inverseResult + modulo : inverseResult;
+        }
+
+        public static bool TryModInverse(Fraction fraction, int modulo, out Fraction result)
+        {
+            var gcdResult = EGcd(fraction.Denominator, modulo);
+            result = default;
+            if (gcdResult.Gcd == 1)
+            {
+                var mod = gcdResult.U % modulo;
+                var inverseResult = mod * fraction.Numerator % modulo;
+                result = inverseResult < 0 ? inverseResult + modulo : inverseResult;
+            }
+
+            return gcdResult.Gcd == 1;
         }
     }
 }

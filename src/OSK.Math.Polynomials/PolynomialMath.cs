@@ -1,4 +1,5 @@
 ﻿using Fractions;
+using OSK.Math.Polynomials.Exceptions;
 using OSK.Math.Polynomials.Models;
 using System;
 using System.Collections.Generic;
@@ -280,7 +281,7 @@ namespace OSK.Math.Polynomials
         {
             if (modulo == 0)
             {
-                throw new InvalidOperationException($"Modulo can not be 0.");
+                throw new ModInverseException($"Modulo can not be 0.");
             }
 
             polynomial.Pack();
@@ -293,6 +294,30 @@ namespace OSK.Math.Polynomials
 
             result.Pack();
             return result;
+        }
+
+        public static bool TryModInverse(Polynomial polynomial, int modulo, out Polynomial result)
+        {
+            if (modulo == 0)
+            {
+                throw new ModInverseException($"Modulo can not be 0.");
+            }
+
+            polynomial.Pack();
+
+            result = new Polynomial(polynomial.TotalCoeffecients);
+            for (var i = 0; i < result.Length; i++)
+            {
+                if (!MathUtilities.TryModInverse(polynomial[i].Coeffecient, modulo, out var inverse))
+                {
+                    result = null;
+                    return false;
+                }
+                result[i] = new PolynomialTerm(inverse, result[i].Exponent);
+            }
+
+            result.Pack();
+            return true;
         }
 
         #endregion
