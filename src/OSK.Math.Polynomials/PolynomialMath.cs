@@ -289,7 +289,8 @@ namespace OSK.Math.Polynomials
             var result = new Polynomial(polynomial.TotalCoeffecients);
             for (var i = 0; i < result.Length; i++)
             {
-                result[i] = new PolynomialTerm(MathUtilities.ModInverse(polynomial[i].Coeffecient, modulo), result[i].Exponent);
+                var polynomialTerm = polynomial.GetPolynomialTermByDegree(i);
+                result[i] = new PolynomialTerm(MathUtilities.ModInverse(polynomialTerm.Coeffecient, modulo), result[i].Exponent);
             }
 
             result.Pack();
@@ -308,7 +309,8 @@ namespace OSK.Math.Polynomials
             result = new Polynomial(polynomial.TotalCoeffecients);
             for (var i = 0; i < result.Length; i++)
             {
-                if (!MathUtilities.TryModInverse(polynomial[i].Coeffecient, modulo, out var inverse))
+                var polynomialTerm = polynomial.GetPolynomialTermByDegree(i);
+                if (!MathUtilities.TryModInverse(polynomialTerm.Coeffecient, modulo, out var inverse))
                 {
                     result = null;
                     return false;

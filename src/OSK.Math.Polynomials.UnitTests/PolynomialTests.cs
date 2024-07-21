@@ -54,6 +54,77 @@ namespace OSK.Math.Polynomials.UnitTests
 
         #endregion
 
+        #region GetPolynomialTermByDegree
+
+        [Fact]
+        public void GetPolynomialTermByDegree_IndexLessThan0_ThrowsIndexOutOfRangeException()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 0, 0, 0, 1, 1); // 1 + x^4 + x^5
+            polynomial.Pack();
+
+            // Act/Assert
+            Assert.Throws<IndexOutOfRangeException>(() => polynomial.GetPolynomialTermByDegree(-1));
+        }
+
+
+        [Fact]
+        public void GetPolynomialTermByDegree_IndexGreaerThanPolynomialLength_ThrowsIndexOutOfRangeException()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 0, 0, 0, 1, 1); // 1 + x^4 + x^5
+            polynomial.Pack();
+
+            // Act/Assert
+            Assert.Throws<IndexOutOfRangeException>(() => polynomial.GetPolynomialTermByDegree(6));
+        }
+
+        [Fact]
+        public void GetPolynomialTermByDegree_NotPacked_DegreeWithinPolynomial_ReturnsZeroPolynomialTerm()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 0, 0, 0, 1, 1); // 1 + x^4 + x^5
+
+            // Act
+            var term = polynomial.GetPolynomialTermByDegree(3);
+
+            // Assert
+            Assert.Equal(3, term.Exponent);
+            Assert.Equal(0, term.Coeffecient);
+        }
+
+        [Fact]
+        public void GetPolynomialTermByDegree_Packed_DegreeWithinPolynomialButMissingCoeffecient_ReturnsZeroPolynomialTerm()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 0, 0, 0, 1, 1); // 1 + x^4 + x^5
+            polynomial.Pack();
+
+            // Act
+            var term = polynomial.GetPolynomialTermByDegree(3);
+
+            // Assert
+            Assert.Equal(3, term.Exponent);
+            Assert.Equal(0, term.Coeffecient);
+        }
+
+        [Fact]
+        public void GetPolynomialTermByDegree_Packed_DegreeWithinPolynomialIsIndexed_ReturnsExpectedPolynomialTerm()
+        {
+            // Arrange
+            var polynomial = new Polynomial(1, 0, 0, 0, 1, 1, 0, 1, 116, 2); // 1 + x^4 + x^5 + x7 + 116x^8 + 2x^9
+            polynomial.Pack();
+
+            // Act
+            var term = polynomial.GetPolynomialTermByDegree(8);
+
+            // Assert
+            Assert.Equal(8, term.Exponent);
+            Assert.Equal(116, term.Coeffecient);
+        }
+
+        #endregion
+
         #region ToString
 
         [Fact]

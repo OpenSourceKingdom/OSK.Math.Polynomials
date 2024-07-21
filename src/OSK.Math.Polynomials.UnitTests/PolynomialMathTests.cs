@@ -373,6 +373,88 @@ namespace OSK.Math.Polynomials.UnitTests
 
         #endregion
 
+        #region ModRemainder
+
+        [Fact]
+        public void ModRemainder_SmallerDivisor_ReturnsExpected()
+        {
+            // Arrange
+            
+            // -22x - 16x^2 + 25x^3 + 38x^4 + 32x^5 + 51x^6 + 44x^7 + 38x^8 + 16x^9
+            var dividend = new Polynomial(0, -22, -16, 25, 37, 32, 51, 44, 38, 16);
+
+            // -1 + x^7
+            var divisor = new Polynomial(-1, 0, 0, 0, 0, 0, 0, 1);
+
+            // Act
+            var result = PolynomialMath.ModRemainder(dividend, divisor, 41);
+
+            // Assert
+
+            // Expected: 3 + 16x + 25x^3 + 37x^4 + 32x^5 + 10x^6
+            var expectedPolynomial = new Polynomial(3, 16, 0, 25, 37, 32, 10);
+
+            Assert.Equal(expectedPolynomial, result);
+        }
+
+        #endregion
+
+        #region ModInverse
+
+        [Fact]
+        public void ModInverse_PolynomialHasLessCoeffecientsThanDegree_ReturnsExpected()
+        {
+            // Arrange
+
+            // x + 2x^5
+            var dividend = new Polynomial(0, 1, 0, 0, 0, 2);
+
+            // Act
+            var result = PolynomialMath.ModInverse(dividend, 41);
+
+            // Assert
+
+            // Expected: x + 2x^5
+            Assert.Equal(2, result.Length);
+
+            var polynomialTerm = result[0];
+            Assert.Equal(1, polynomialTerm.Exponent);
+            Assert.Equal(1, polynomialTerm.Coeffecient);
+
+            polynomialTerm = result[1];
+            Assert.Equal(5, polynomialTerm.Exponent);
+            Assert.Equal(2, polynomialTerm.Coeffecient);
+        }
+
+        #endregion
+
+        #region TryModInverse
+
+        [Fact]
+        public void TryModInverse_PolynomialHasLessCoeffecientsThanDegree_ReturnsExpected()
+        {
+            // Arrange
+
+            // x + 2x^5
+            var test = new Polynomial(0, 1, 0, 0, 0, 2);
+
+            // Act
+            var result = PolynomialMath.TryModInverse(test, 41, out var polynomial);
+
+            // Assert
+            Assert.True(result);
+
+            var polynomialTerm = polynomial[0];
+            Assert.Equal(1, polynomialTerm.Exponent);
+            Assert.Equal(1, polynomialTerm.Coeffecient);
+
+            polynomialTerm = polynomial[1];
+            Assert.Equal(5, polynomialTerm.Exponent);
+            Assert.Equal(2, polynomialTerm.Coeffecient);
+        }
+
+        #endregion
+
         #region Extended Euclidean
 
         [Fact]

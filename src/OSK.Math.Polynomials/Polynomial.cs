@@ -160,12 +160,14 @@ namespace OSK.Math.Polynomials
             {
                 throw new IndexOutOfRangeException($"The provided polynomial term degree, {degree}, is outside the degree of the polynomial.");
             }
-            if (_polynomialIndexLookupByDegree.TryGetValue(degree, out var polynomialTermIndex))
+            if (_isPacked)
             {
-                return _polynomialTerms[polynomialTermIndex];
+                return _polynomialIndexLookupByDegree.TryGetValue(degree, out var polynomialTermIndex)
+                    ? _polynomialTerms[polynomialTermIndex]
+                    : new PolynomialTerm(0, 1, degree);
             }
 
-            for (var i = 0; i < degree; i++)
+            for (var i = 0; i < Length; i++)
             {
                 if (_polynomialTerms[i].Exponent == degree)
                 {
@@ -173,7 +175,7 @@ namespace OSK.Math.Polynomials
                 }
             }
 
-            return new PolynomialTerm(0, 1, Degree);
+            return new PolynomialTerm(0, 1, degree);
         }
 
         #endregion
